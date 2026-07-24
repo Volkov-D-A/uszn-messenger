@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1920, initial-scale=1">
+  <title>Больше, чем просто сообщения</title>
+  <style>
+    :root {
+      --white: #f7f9ff;
+      --blue: #5b7cff;
+      --cyan: #54d2c4;
+      --green: #45bf87;
+      --amber: #f5bc5b;
+      --panel: rgba(18, 30, 53, 0.82);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 1920px;
+      height: 1080px;
+      margin: 0;
+      overflow: hidden;
+      background: #0c1c34;
+      font-family: Arial, "Ubuntu Sans", sans-serif;
+    }
+
+    .slide {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      color: var(--white);
+      background-image: url("../assets/slide-04-capabilities-v2.png");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(5, 17, 36, 0.22) 0%, rgba(5, 17, 36, 0.04) 43%, transparent 64%),
+        linear-gradient(0deg, rgba(5, 15, 32, 0.22) 0%, transparent 34%);
+    }
+
+    .accent {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 14px;
+      background: linear-gradient(180deg, var(--blue), var(--cyan));
+    }
+
+    .content {
+      position: absolute;
+      left: 88px;
+      top: 76px;
+      width: 700px;
+    }
+
+    .label {
+      display: inline-flex;
+      align-items: center;
+      height: 42px;
+      padding: 0 22px;
+      border: 1px solid rgba(84, 210, 196, 0.5);
+      border-radius: 21px;
+      color: #9ce9df;
+      background: rgba(18, 58, 67, 0.58);
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 1.7px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      width: 690px;
+      margin: 43px 0 0;
+      font-size: 64px;
+      line-height: 1.01;
+      letter-spacing: -2.2px;
+      font-weight: 800;
+      text-shadow: 0 3px 16px rgba(4, 14, 29, 0.3);
+    }
+
+    .subtitle {
+      width: 660px;
+      margin-top: 24px;
+      color: #dce5f6;
+      font-size: 27px;
+      line-height: 1.24;
+      font-weight: 600;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 13px;
+      width: 694px;
+      margin-top: 31px;
+    }
+
+    .feature {
+      min-height: 96px;
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      align-items: center;
+      padding: 13px 16px;
+      border: 1px solid rgba(202, 214, 234, 0.17);
+      border-radius: 18px;
+      background: rgba(15, 31, 56, 0.76);
+      box-shadow: 0 12px 30px rgba(3, 12, 27, 0.16);
+      backdrop-filter: blur(10px);
+    }
+
+    .feature.wide { grid-column: 1 / -1; min-height: 76px; }
+
+    .icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      color: white;
+      font-size: 22px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .blue { background: var(--blue); }
+    .cyan { background: var(--cyan); }
+    .amber { background: var(--amber); color: #18233a; }
+    .green { background: var(--green); }
+    .violet { background: #8b78de; }
+
+    .feature-title {
+      color: #f7f9ff;
+      font-size: 20px;
+      line-height: 1.12;
+      font-weight: 750;
+    }
+
+    .feature-text {
+      margin-top: 5px;
+      color: #bdc9dc;
+      font-size: 15px;
+      line-height: 1.18;
+      font-weight: 500;
+    }
+
+    .future {
+      position: absolute;
+      right: 83px;
+      top: 78px;
+      max-width: 480px;
+      padding: 12px 18px;
+      border: 1px solid rgba(245, 188, 91, 0.4);
+      border-radius: 18px;
+      background: rgba(30, 38, 55, 0.63);
+      backdrop-filter: blur(10px);
+      color: #e7edf7;
+      font-size: 17px;
+      line-height: 1.25;
+      box-shadow: 0 12px 30px rgba(4, 13, 27, 0.14);
+    }
+
+    .future strong { color: #ffd584; }
+
+    .caption {
+      position: absolute;
+      left: 88px;
+      right: 82px;
+      bottom: 43px;
+      min-height: 88px;
+      display: flex;
+      align-items: center;
+      padding: 18px 96px 18px 30px;
+      border-left: 5px solid var(--cyan);
+      border-radius: 0 18px 18px 0;
+      background: var(--panel);
+      box-shadow: 0 18px 48px rgba(5, 14, 29, 0.2);
+      backdrop-filter: blur(12px);
+      color: #dbe5f4;
+      font-size: 25px;
+      line-height: 1.28;
+      font-weight: 500;
+    }
+
+    .caption strong { color: var(--white); }
+
+    .slide-no {
+      position: absolute;
+      right: 62px;
+      bottom: 73px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+  <main class="slide" aria-label="Третий слайд презентации">
+    <div class="accent"></div>
+
+    <section class="content">
+      <div class="label">Возможности сотрудников</div>
+      <h1>Больше, чем просто сообщения</h1>
+      <div class="subtitle">В системе собраны основные сценарии ежедневной работы</div>
+
+      <div class="features">
+        <div class="feature">
+          <div class="icon blue">Ч</div>
+          <div>
+            <div class="feature-title">Общение группами</div>
+            <div class="feature-text">По теме или по подразделению</div>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="icon cyan">!</div>
+          <div>
+            <div class="feature-title">Объявления</div>
+            <div class="feature-text">Всем или выбранным сотрудникам</div>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="icon violet">+</div>
+          <div>
+            <div class="feature-title">Файлы рядом</div>
+            <div class="feature-text">Документы и фотографии в переписке</div>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="icon amber">⌕</div>
+          <div>
+            <div class="feature-title">Важное под рукой</div>
+            <div class="feature-text">Поиск, закрепления и упоминания</div>
+          </div>
+        </div>
+        <div class="feature wide">
+          <div class="icon green">●</div>
+          <div>
+            <div class="feature-title">Понятно, кто на связи</div>
+            <div class="feature-text">Рабочий статус, режим «Не беспокоить» и автоответ</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="future"><strong>В дальнейшем:</strong> подтверждение ознакомления с особо важными сообщениями</div>
+
+    <div class="caption">
+      <span><strong>Обсуждение, материалы и решения остаются вместе</strong> — не нужно восстанавливать контекст по разным окнам.</span>
+    </div>
+
+    <div class="slide-no">03</div>
+  </main>
+</body>
+</html>

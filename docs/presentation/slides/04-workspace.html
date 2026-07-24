@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1920, initial-scale=1">
+  <title>Всё нужное — на одном экране</title>
+  <style>
+    :root {
+      --white: #f7f9ff;
+      --ink: #172033;
+      --muted: #6f7c91;
+      --blue: #5b7cff;
+      --cyan: #54d2c4;
+      --coral: #ff776f;
+      --amber: #f5bc5b;
+      --green: #45bf87;
+      --panel: #172033;
+      --panel2: #212b3e;
+      --line: #dce3ed;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 1920px;
+      height: 1080px;
+      margin: 0;
+      overflow: hidden;
+      background: #10213b;
+      font-family: Arial, "Ubuntu Sans", sans-serif;
+    }
+
+    .slide {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      color: var(--white);
+      background-image: url("../assets/slide-03-office-background.png");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(8, 20, 39, 0.34) 0%, rgba(8, 20, 39, 0) 31%);
+    }
+
+    .accent {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 14px;
+      height: 1080px;
+      background: linear-gradient(180deg, var(--blue), var(--cyan));
+    }
+
+    .intro {
+      position: absolute;
+      left: 88px;
+      top: 74px;
+      width: 525px;
+    }
+
+    .label {
+      display: inline-flex;
+      align-items: center;
+      height: 42px;
+      padding: 0 22px;
+      border: 1px solid rgba(84, 210, 196, 0.5);
+      border-radius: 21px;
+      color: #9ce9df;
+      background: rgba(18, 58, 67, 0.54);
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 1.7px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 48px 0 0;
+      font-size: 62px;
+      line-height: 1.02;
+      letter-spacing: -2.2px;
+      font-weight: 800;
+      text-shadow: 0 3px 16px rgba(4, 14, 29, 0.26);
+    }
+
+    .subtitle {
+      margin-top: 30px;
+      color: #dce5f6;
+      font-size: 27px;
+      line-height: 1.25;
+      font-weight: 600;
+    }
+
+    .legend {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 39px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      width: max-content;
+      min-width: 395px;
+      min-height: 54px;
+      padding: 8px 22px 8px 10px;
+      border: 1px solid rgba(207, 217, 233, 0.18);
+      border-radius: 28px;
+      background: rgba(20, 35, 61, 0.73);
+      box-shadow: 0 10px 25px rgba(5, 14, 29, 0.15);
+      font-size: 21px;
+      font-weight: 650;
+    }
+
+    .legend-number,
+    .zone-number {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      margin-right: 14px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: var(--blue);
+      color: white;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .legend-item:nth-child(2) .legend-number,
+    .zone-number.two { background: var(--cyan); }
+
+    .legend-item:nth-child(3) .legend-number,
+    .zone-number.three { background: var(--amber); color: #533500; }
+
+    .app {
+      position: absolute;
+      left: 665px;
+      top: 126px;
+      width: 1175px;
+      height: 820px;
+      overflow: hidden;
+      border: 1px solid rgba(218, 226, 239, 0.85);
+      border-radius: 22px;
+      background: #f6f8fc;
+      box-shadow: 0 35px 90px rgba(9, 23, 44, 0.28), 0 8px 24px rgba(9, 23, 44, 0.18);
+    }
+
+    .topbar {
+      height: 58px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      background: #111a2b;
+      color: #edf2fb;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      margin-right: 12px;
+      border-radius: 50%;
+      background: var(--blue);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .brand {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .connection {
+      margin-left: auto;
+      padding: 6px 13px;
+      border-radius: 15px;
+      background: rgba(69, 191, 135, 0.16);
+      color: #8fe1b5;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .body {
+      display: grid;
+      grid-template-columns: 250px 1fr 215px;
+      height: 762px;
+    }
+
+    .sidebar {
+      position: relative;
+      padding: 18px 14px;
+      background: var(--panel2);
+      color: #cbd4e3;
+    }
+
+    .zone-number {
+      position: absolute;
+      right: -17px;
+      top: 18px;
+      z-index: 5;
+      margin: 0;
+      box-shadow: 0 4px 12px rgba(16, 32, 59, 0.25);
+    }
+
+    .search {
+      height: 38px;
+      padding: 10px 13px;
+      border-radius: 9px;
+      background: #2d384e;
+      color: #98a5ba;
+      font-size: 13px;
+    }
+
+    .announce {
+      display: flex;
+      align-items: center;
+      height: 46px;
+      margin-top: 14px;
+      padding: 0 12px;
+      border-radius: 10px;
+      background: #304162;
+      color: #f1f4fa;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .announce .badge {
+      display: grid;
+      place-items: center;
+      width: 21px;
+      height: 21px;
+      margin-left: auto;
+      border-radius: 50%;
+      background: var(--coral);
+      color: white;
+      font-size: 11px;
+    }
+
+    .section-title {
+      margin: 22px 8px 10px;
+      color: #8794aa;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+    }
+
+    .chat {
+      display: grid;
+      grid-template-columns: 37px 1fr auto;
+      gap: 8px;
+      align-items: center;
+      min-height: 54px;
+      margin: 4px 0;
+      padding: 7px 9px;
+      border-radius: 10px;
+    }
+
+    .chat.active { background: #2c3549; }
+
+    .avatar {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #6f84ca;
+      color: white;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .chat:nth-of-type(2) .avatar { background: #42a99b; }
+    .chat:nth-of-type(3) .avatar { background: #876ec5; }
+    .chat:nth-of-type(4) .avatar { background: #c89138; }
+
+    .chat-name {
+      color: #e9eef7;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .chat-preview {
+      margin-top: 3px;
+      color: #8d99ae;
+      font-size: 10px;
+    }
+
+    .unread {
+      display: grid;
+      place-items: center;
+      min-width: 19px;
+      height: 19px;
+      padding: 0 5px;
+      border-radius: 10px;
+      background: var(--blue);
+      color: white;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .conversation {
+      position: relative;
+      background: #f8fafd;
+      color: var(--ink);
+    }
+
+    .conversation .zone-number {
+      left: 20px;
+      right: auto;
+      top: 16px;
+    }
+
+    .conversation-head {
+      height: 72px;
+      padding: 13px 20px 10px 70px;
+      border-bottom: 1px solid var(--line);
+      background: white;
+    }
+
+    .conversation-title {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .conversation-meta {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .messages {
+      height: 615px;
+      padding: 18px 22px;
+    }
+
+    .message {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .message .avatar { width: 36px; height: 36px; background: #7285a8; }
+    .message:nth-child(2) .avatar { background: #5d7fd4; }
+    .message:nth-child(3) .avatar { background: #42a99b; }
+
+    .author {
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .time {
+      margin-left: 8px;
+      color: #9aa5b5;
+      font-size: 10px;
+      font-weight: 400;
+    }
+
+    .message-text {
+      margin-top: 5px;
+      color: #3b475a;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .file-card {
+      display: flex;
+      align-items: center;
+      width: 320px;
+      height: 62px;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border: 1px solid #dde4ee;
+      border-radius: 10px;
+      background: #eef2f7;
+    }
+
+    .file-icon {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      margin-right: 11px;
+      border-radius: 8px;
+      background: #dce5ff;
+      color: #4569df;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .file-name { font-size: 11px; font-weight: 800; }
+    .file-size { margin-top: 3px; color: #8c98aa; font-size: 9px; }
+
+    .composer {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 18px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      border-radius: 12px;
+      background: #edf1f6;
+      color: #9aa5b4;
+      font-size: 12px;
+    }
+
+    .plus {
+      display: grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      margin-right: 10px;
+      border-radius: 50%;
+      background: #dbe3f4;
+      color: var(--blue);
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .send {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      margin-left: auto;
+      border-radius: 50%;
+      background: var(--blue);
+      color: white;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .members {
+      position: relative;
+      padding: 22px 14px;
+      border-left: 1px solid var(--line);
+      background: #f0f3f8;
+      color: var(--ink);
+    }
+
+    .members .zone-number {
+      left: -17px;
+      right: auto;
+      top: 18px;
+    }
+
+    .members-title {
+      margin-left: 22px;
+      color: #69778c;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.9px;
+    }
+
+    .member {
+      display: grid;
+      grid-template-columns: 35px 1fr;
+      gap: 9px;
+      align-items: center;
+      margin: 18px 4px;
+    }
+
+    .member .avatar { position: relative; width: 35px; height: 35px; }
+    .member:nth-of-type(3) .avatar { background: #42a99b; }
+    .member:nth-of-type(4) .avatar { background: #876ec5; }
+    .member:nth-of-type(5) .avatar { background: #c89138; }
+
+    .status-dot {
+      position: absolute;
+      right: -1px;
+      bottom: -1px;
+      width: 10px;
+      height: 10px;
+      border: 2px solid #f0f3f8;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    .member-name { font-size: 11px; font-weight: 800; }
+    .member-role { margin-top: 3px; color: #8290a3; font-size: 9px; }
+
+    .availability {
+      margin-top: 34px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #e1f5e9;
+      color: #2b8657;
+      font-size: 10px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .caption {
+      position: absolute;
+      left: 88px;
+      bottom: 43px;
+      width: 1750px;
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      padding: 15px 28px;
+      border-left: 5px solid var(--cyan);
+      border-radius: 0 16px 16px 0;
+      background: rgba(18, 30, 53, 0.88);
+      color: #dbe5f4;
+      font-size: 23px;
+      line-height: 1.25;
+      box-shadow: 0 18px 48px rgba(5, 14, 29, 0.18);
+      backdrop-filter: blur(10px);
+    }
+
+    .caption strong { color: var(--white); }
+
+    .slide-no {
+      position: absolute;
+      right: 62px;
+      bottom: 63px;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+  <main class="slide" aria-label="Четвёртый слайд презентации">
+    <div class="accent"></div>
+
+    <section class="intro">
+      <div class="label">Рабочее окно</div>
+      <h1>Всё нужное — на одном экране</h1>
+      <div class="subtitle">Понятная структура без лишних переключений</div>
+
+      <div class="legend">
+        <div class="legend-item"><span class="legend-number">1</span>Чаты и объявления</div>
+        <div class="legend-item"><span class="legend-number">2</span>Переписка и файлы</div>
+        <div class="legend-item"><span class="legend-number">3</span>Сотрудники и статусы</div>
+      </div>
+    </section>
+
+    <section class="app" aria-label="Пример интерфейса системы">
+      <header class="topbar">
+        <div class="brand-mark">У</div>
+        <div class="brand">Система коммуникации УСЗН</div>
+        <div class="connection">● На связи</div>
+      </header>
+
+      <div class="body">
+        <aside class="sidebar">
+          <div class="zone-number">1</div>
+          <div class="search">Поиск</div>
+          <div class="announce">Объявления <span class="badge">3</span></div>
+          <div class="section-title">АКТИВНЫЕ ЧАТЫ</div>
+
+          <div class="chat active">
+            <div class="avatar">ОС</div>
+            <div><div class="chat-name">Отдел семьи</div><div class="chat-preview">Новый документ</div></div>
+            <div class="unread">12</div>
+          </div>
+          <div class="chat">
+            <div class="avatar">КВ</div>
+            <div><div class="chat-name">Семейное счастье</div><div class="chat-preview">Без новых сообщений</div></div>
+          </div>
+          <div class="chat">
+            <div class="avatar">ДВ</div>
+            <div><div class="chat-name">Дмитрий Волков</div><div class="chat-preview">На связи</div></div>
+            <div class="unread">2</div>
+          </div>
+        </aside>
+
+        <section class="conversation">
+          <div class="zone-number two">2</div>
+          <header class="conversation-head">
+            <div class="conversation-title"># Отдел семьи</div>
+            <div class="conversation-meta">Чат подразделения • 47 сотрудников</div>
+          </header>
+
+          <div class="messages">
+            <div class="message">
+              <div class="avatar">МК</div>
+              <div>
+                <div class="author">Мария Кузнецова <span class="time">10:28</span></div>
+                <div class="message-text">Коллеги, разместила обновленный график приема.</div>
+                <div class="file-card">
+                  <div class="file-icon">PDF</div>
+                  <div><div class="file-name">График_приема_август.pdf</div><div class="file-size">1,8 МБ</div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="message">
+              <div class="avatar">АП</div>
+              <div>
+                <div class="author">Алексей Петров <span class="time">10:34</span></div>
+                <div class="message-text">Спасибо. Закрепил документ, чтобы он оставался под рукой.</div>
+              </div>
+            </div>
+
+            <div class="message">
+              <div class="avatar">ЕО</div>
+              <div>
+                <div class="author">Елена Орлова <span class="time">10:37</span></div>
+                <div class="message-text">Уведомила сотрудников нашего отдела.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="composer"><span class="plus">+</span>Написать сообщение… <span class="send">›</span></div>
+        </section>
+
+        <aside class="members">
+          <div class="zone-number three">3</div>
+          <div class="members-title">СОТРУДНИКИ — 47</div>
+
+          <div class="member"><div class="avatar">АП<span class="status-dot"></span></div><div><div class="member-name">Алексей Петров</div><div class="member-role">Руководитель</div></div></div>
+          <div class="member"><div class="avatar">МК<span class="status-dot"></span></div><div><div class="member-name">Мария Кузнецова</div><div class="member-role">Специалист</div></div></div>
+          <div class="member"><div class="avatar">ДС<span class="status-dot"></span></div><div><div class="member-name">Дмитрий Смирнов</div><div class="member-role">Юрист</div></div></div>
+          <div class="member"><div class="avatar">ЕО<span class="status-dot"></span></div><div><div class="member-name">Елена Орлова</div><div class="member-role">Кадры</div></div></div>
+
+          <div class="availability">34 сотрудника на связи</div>
+        </aside>
+      </div>
+    </section>
+
+    <div class="caption"><span><strong>Привычная структура помогает сразу найти нужный диалог</strong> и продолжить работу с того места, где она остановилась.</span></div>
+    <div class="slide-no">04</div>
+  </main>
+</body>
+</html>

@@ -40,19 +40,21 @@
 
 ### Message
 
-Поля: `id`, `conversationId`, `authorId`, `kind`, `text`, `replyToId`, `clientCreatedAt`, `createdAt`, `editedAt`, `deletedAt`, `revokedAt`, `revocationReason`, `criticalDeadline`, `sequence`.
+Поля: `id`, `conversationId`, `authorId`, `kind`, `text`, `replyToId`, `clientCreatedAt`, `createdAt`, `editedAt`, `deletedAt`, `revokedAt`, `revocationReason`, `sequence`.
 
 `kind`: `regular`, `critical`, `system`, `dnd_auto_reply`. Вложения и упоминания связаны отдельными записями. Текст после мягкого удаления недоступен обычному API. Критичное сообщение неизменяемо после создания.
 
 ### Attachment
 
-Поля: `id`, `ownerId`, `originalName`, `mediaType`, `size`, `sha256`, `state`, `storageKey`, `createdAt`, `attachedAt`.
+Поля: `id`, `ownerId`, `originalName`, `mediaType`, `size`, `sha256`, `state`, `storageKey`, `createdAt`, `attachedAt`, `expiresAt`, `purgedAt`.
 
-Состояния: `uploading`, `ready`, `attached`, `expired`, `deleted`. Доступ к скачиванию всегда вычисляется через связанное сообщение или объявление; прямой storage path клиенту не возвращается.
+Состояния: `uploading`, `ready`, `attached`, `expired`, `deleted`. Для прикрепленного файла `expiresAt` равен времени отправки сообщения или объявления плюс 30 дней. После перехода в `expired` содержимое и `storageKey` физически удаляются, а имя, тип, размер, checksum и связь с исходным объектом сохраняются. Доступ к скачиванию всегда вычисляется через связанное сообщение или объявление; прямой storage path клиенту не возвращается.
+
+Общая политика вложений содержит `maxFileSize`, `storageQuota`, `warningThreshold = 0.70` и `rejectThreshold = 0.95`. При достижении порога запрета создание новой загрузки возвращает `attachment_storage_full`; уже загруженные файлы и текстовые команды остаются доступны.
 
 ### Announcement
 
-Поля: `id`, `authorId`, `title`, `text`, `critical`, `criticalDeadline`, `status`, `audienceSpec`, `audienceCount`, `createdAt`, `sentAt`, `revokedAt`, `revocationReason`.
+Поля: `id`, `authorId`, `title`, `text`, `critical`, `status`, `audienceSpec`, `audienceCount`, `createdAt`, `sentAt`, `revokedAt`, `revocationReason`.
 
 `audienceSpec` сохраняет исходные критерии, а `AnnouncementRecipient` — дедуплицированный снимок адресатов на момент отправки. Последующие изменения тегов или подразделений не меняют уже отправленную аудиторию.
 
@@ -74,9 +76,9 @@ stateDiagram-v2
 
 Presence — оперативное состояние и не является доказательством фактического нахождения сотрудника за компьютером.
 
-### RetentionPolicy и AuditEvent
+### Retention и AuditEvent
 
-`RetentionPolicy` задает срок по типу чата/объекта и область действия. Отсутствие политики означает отсутствие автоматического удаления.
+Тексты сообщений и объявлений хранятся бессрочно, включая скрытый текст мягко удаленных объектов. Содержимое вложений удаляется через 30 дней после отправки независимо от типа чата и области действия. Срок не настраивается администратором.
 
 `AuditEvent` хранит актера, действие, тип и идентификатор объекта, результат, время, correlation ID и безопасные метаданные. Текст сообщений не копируется в аудит.
 
@@ -98,9 +100,10 @@ Presence — оперативное состояние и не является 
 
 | Метод и путь | Назначение |
 | --- | --- |
-| `POST /auth/login` | Логин/пароль, выдача access и refresh token |
-| `POST /auth/refresh` | Ротация refresh token |
+| `POST /auth/login` | Логин/пароль, выдача access token на 15 минут и refresh token на 30 дней |
+| `POST /auth/refresh` | Однократная ротация refresh token без продления исходного 30-дневного срока сессии |
 | `POST /auth/logout` | Отзыв текущей сессии |
+| `POST /auth/change-password` | Замена временного или постоянного пароля; ограниченная сессия первого входа допускает только эту операцию |
 | `POST /auth/ws-ticket` | Короткоживущий одноразовый ticket для открытия WebSocket |
 | `GET /me` | Текущий пользователь, роли, scope и настройки |
 
@@ -108,14 +111,15 @@ Presence — оперативное состояние и не является 
 
 | Метод и путь | Назначение |
 | --- | --- |
-| `GET/POST /users` | Список и создание пользователей |
+| `GET/POST /users` | Список и создание пользователей; при создании временный пароль возвращается один раз вместе с `expiresAt` |
 | `PATCH /users/{id}` | Профиль, блокировка и подразделение |
-| `POST /users/{id}/reset-password` | Административный сброс с принудительной сменой |
+| `POST /users/{id}/reset-password` | Аннулирование прежних сессий и временного пароля; новый временный пароль возвращается один раз вместе с `expiresAt` |
 | `GET/POST/PATCH /departments` | Дерево подразделений |
 | `GET/POST/PATCH /groups` | Служебные группы и членство |
 | `GET/POST/PATCH /tags` | Теги и членство |
 | `GET/POST/DELETE /role-assignments` | Назначения ролей и scope |
-| `GET /audit-events` | Фильтрованный административный аудит |
+| `GET /audit-events` | Фильтрованный административный аудит с пагинацией |
+| `POST /audit-events/export` | Формирование одного CSV-файла по фильтрам; требует `audit.export` и создает событие аудита |
 
 ### Чаты и сообщения
 
@@ -125,6 +129,7 @@ Presence — оперативное состояние и не является 
 | `PATCH /conversations/{id}/notification-settings` | Персональный режим обычных уведомлений текущего пользователя |
 | `GET /conversations/{id}/messages` | История назад от cursor |
 | `POST /conversations/{id}/messages` | Отправка сообщения |
+| `POST /conversations/{id}/mention-preview` | Проверка разрешения/scope и расчет дедуплицированных адресатов `@tag` с выдачей короткоживущего preview token |
 | `PATCH /messages/{id}` | Редактирование обычного сообщения |
 | `DELETE /messages/{id}` | Мягкое удаление обычного сообщения |
 | `POST /messages/{id}/revoke` | Отзыв критичного сообщения с причиной |
@@ -133,10 +138,15 @@ Presence — оперативное состояние и не является 
 | `POST /messages/{id}/read` | Фиксация просмотра |
 | `POST /messages/{id}/acknowledge` | Явное «Ознакомлен» |
 | `POST /receipts/delivered` | Пакетная фиксация доставки объектов клиенту |
-| `GET /search/messages` | Полнотекстовый поиск в доступной области |
+| `GET /search/messages` | PostgreSQL FTS `russian` по доступным сообщениям и объявлениям |
+| `GET /search/directory` | Регистронезависимая точная подстрока по доступным именам и логинам |
 | `GET /attention` | Упоминания и доступные объекты, требующие ознакомления |
 
 Раздел «Внимание» является вычисляемым представлением исходных сообщений и объявлений. Он не создает отдельные копии контента и на каждый запрос применяет текущие права пользователя.
+
+Сообщение с `@tag` включает preview token. Сервер непосредственно перед созданием сообщения заново рассчитывает дедуплицированный набор доступных адресатов. Если hash состава отличается от preview, команда возвращает `audience_changed`; фиксированного ограничения количества адресатов нет.
+
+Поиск текста использует нормализованный `tsvector` с явно заданной конфигурацией `pg_catalog.russian`. Имена пользователей, логины и исходные имена файлов сопоставляются с регистронезависимой подстрокой. Метаданные вложения остаются в индексе после удаления его содержимого по сроку. OCR, содержимое файлов, нечеткое сопоставление и словарь синонимов не входят в MVP.
 
 ### Объявления и вложения
 
@@ -190,10 +200,10 @@ Preview возвращает краткоживущий `previewToken`, hash н�
 
 Эфемерные события без `sequence`: `presence.changed`, `typing.started`, `typing.stopped`. Потеря такого события допустима; у него есть короткий TTL.
 
-Клиент подтверждает последний примененный долговечный sequence. При неизвестном или слишком старом курсоре сервер отвечает `resync_required`, после чего клиент выполняет полную разрешенную синхронизацию.
+Долговечные события хранятся 30 дней с момента создания. Клиент подтверждает последний примененный sequence. Если соответствующий курсор неизвестен или старше доступного журнала, сервер отвечает `resync_required`, после чего клиент очищает производный кеш и выполняет полную синхронизацию всех доступных ему данных.
 
 ## 6. Коды ошибок
 
-Минимальный стабильный набор: `invalid_credentials`, `session_revoked`, `forbidden`, `not_found`, `validation_failed`, `edit_window_expired`, `immutable_message`, `attachment_too_large`, `idempotency_conflict`, `preview_expired`, `audience_changed`, `rate_limited`, `resync_required`, `server_version_incompatible`.
+Минимальный стабильный набор: `invalid_credentials`, `session_revoked`, `forbidden`, `not_found`, `validation_failed`, `edit_window_expired`, `immutable_message`, `attachment_too_large`, `attachment_storage_full`, `idempotency_conflict`, `preview_expired`, `audience_changed`, `rate_limited`, `resync_required`, `server_version_incompatible`.
 
 `403` и `404` выбираются так, чтобы не раскрывать существование приватного ресурса. Детальная причина отказа записывается в серверный аудит, но не возвращается неавторизованному пользователю.

@@ -36,7 +36,7 @@
 
 Типы `Conversation`: `direct`, `public_channel`, `private_channel`, `department_channel`.
 
-Общие поля: `id`, `type`, `name`, `description`, `createdBy`, `archivedAt`, `createdAt`, `updatedAt`. Для direct-чата пара пользователей уникальна. `Membership` хранит пользователя, роль в чате, момент вступления, последний прочитанный sequence и состояние уведомлений.
+Общие поля: `id`, `type`, `name`, `description`, `createdBy`, `archivedAt`, `createdAt`, `updatedAt`. Для direct-чата пара пользователей уникальна. `Membership` хранит пользователя, роль в чате, момент вступления, последний прочитанный sequence и режим обычных уведомлений: `all`, `mentions` или `muted`.
 
 ### Message
 
@@ -122,6 +122,7 @@ Presence — оперативное состояние и не является 
 | Метод и путь | Назначение |
 | --- | --- |
 | `GET/POST /conversations` | Доступные чаты и создание канала/диалога |
+| `PATCH /conversations/{id}/notification-settings` | Персональный режим обычных уведомлений текущего пользователя |
 | `GET /conversations/{id}/messages` | История назад от cursor |
 | `POST /conversations/{id}/messages` | Отправка сообщения |
 | `PATCH /messages/{id}` | Редактирование обычного сообщения |
@@ -133,6 +134,9 @@ Presence — оперативное состояние и не является 
 | `POST /messages/{id}/acknowledge` | Явное «Ознакомлен» |
 | `POST /receipts/delivered` | Пакетная фиксация доставки объектов клиенту |
 | `GET /search/messages` | Полнотекстовый поиск в доступной области |
+| `GET /attention` | Упоминания и доступные объекты, требующие ознакомления |
+
+Раздел «Внимание» является вычисляемым представлением исходных сообщений и объявлений. Он не создает отдельные копии контента и на каждый запрос применяет текущие права пользователя.
 
 ### Объявления и вложения
 

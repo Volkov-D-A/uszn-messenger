@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=1920, initial-scale=1">
-  <title>Больше, чем просто сообщения</title>
+  <title>Быстрая связь с нужными сотрудниками</title>
   <style>
     :root {
       --white: #f7f9ff;
@@ -31,9 +31,9 @@
       height: 1080px;
       overflow: hidden;
       color: var(--white);
-      background-image: url("../assets/slide-04-capabilities-v2.png");
-      background-size: cover;
-      background-position: center;
+      background:
+        radial-gradient(circle at 84% 18%, rgba(91, 124, 255, 0.2), transparent 27%),
+        linear-gradient(135deg, #06152a 0%, #0a1d38 61%, #10284a 100%);
     }
 
     .slide::before {
@@ -41,7 +41,7 @@
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(90deg, rgba(5, 17, 36, 0.22) 0%, rgba(5, 17, 36, 0.04) 43%, transparent 64%),
+        linear-gradient(90deg, rgba(5, 17, 36, 0.7) 0%, rgba(5, 17, 36, 0.56) 39%, rgba(5, 17, 36, 0.12) 55%, transparent 70%),
         linear-gradient(0deg, rgba(5, 15, 32, 0.22) 0%, transparent 34%);
     }
 
@@ -55,7 +55,7 @@
     .content {
       position: absolute;
       left: 88px;
-      top: 76px;
+      top: 82px;
       width: 700px;
     }
 
@@ -76,8 +76,8 @@
 
     h1 {
       width: 690px;
-      margin: 43px 0 0;
-      font-size: 64px;
+      margin: 55px 0 0;
+      font-size: 68px;
       line-height: 1.01;
       letter-spacing: -2.2px;
       font-weight: 800;
@@ -86,35 +86,35 @@
 
     .subtitle {
       width: 660px;
-      margin-top: 24px;
+      margin-top: 34px;
       color: #dce5f6;
-      font-size: 27px;
+      font-size: 29px;
       line-height: 1.24;
       font-weight: 600;
     }
 
     .features {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 13px;
-      width: 694px;
-      margin-top: 31px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 650px;
+      margin-top: 38px;
     }
 
     .feature {
-      min-height: 96px;
+      min-height: 68px;
       display: grid;
       grid-template-columns: 52px 1fr;
       align-items: center;
-      padding: 13px 16px;
-      border: 1px solid rgba(202, 214, 234, 0.17);
-      border-radius: 18px;
+      width: max-content;
+      max-width: 650px;
+      padding: 10px 20px 10px 12px;
+      border: 1px solid rgba(202, 214, 234, 0.18);
+      border-radius: 25px;
       background: rgba(15, 31, 56, 0.76);
       box-shadow: 0 12px 30px rgba(3, 12, 27, 0.16);
       backdrop-filter: blur(10px);
     }
-
-    .feature.wide { grid-column: 1 / -1; min-height: 76px; }
 
     .icon {
       width: 42px;
@@ -136,46 +136,28 @@
 
     .feature-title {
       color: #f7f9ff;
-      font-size: 20px;
+      font-size: 21px;
       line-height: 1.12;
       font-weight: 750;
     }
 
     .feature-text {
-      margin-top: 5px;
+      margin-top: 4px;
       color: #bdc9dc;
       font-size: 15px;
       line-height: 1.18;
       font-weight: 500;
     }
 
-    .future {
-      position: absolute;
-      right: 83px;
-      top: 78px;
-      max-width: 480px;
-      padding: 12px 18px;
-      border: 1px solid rgba(245, 188, 91, 0.4);
-      border-radius: 18px;
-      background: rgba(30, 38, 55, 0.63);
-      backdrop-filter: blur(10px);
-      color: #e7edf7;
-      font-size: 17px;
-      line-height: 1.25;
-      box-shadow: 0 12px 30px rgba(4, 13, 27, 0.14);
-    }
-
-    .future strong { color: #ffd584; }
-
     .caption {
       position: absolute;
       left: 88px;
-      right: 82px;
-      bottom: 43px;
+      width: 1120px;
+      bottom: 74px;
       min-height: 88px;
       display: flex;
       align-items: center;
-      padding: 18px 96px 18px 30px;
+      padding: 18px 30px;
       border-left: 5px solid var(--cyan);
       border-radius: 0 18px 18px 0;
       background: var(--panel);
@@ -192,66 +174,96 @@
     .slide-no {
       position: absolute;
       right: 62px;
-      bottom: 73px;
+      bottom: 45px;
       color: rgba(255, 255, 255, 0.72);
       font-size: 18px;
       font-weight: 700;
       letter-spacing: 2px;
     }
   </style>
+  <link rel="stylesheet" href="app-visuals.css">
 </head>
 <body>
   <main class="slide" aria-label="Третий слайд презентации">
     <div class="accent"></div>
 
     <section class="content">
-      <div class="label">Возможности сотрудников</div>
-      <h1>Больше, чем просто сообщения</h1>
-      <div class="subtitle">В системе собраны основные сценарии ежедневной работы</div>
+      <h1>Быстрая связь с нужными сотрудниками</h1>
+      <div class="subtitle">Нужную аудиторию можно найти и выбрать в одном справочнике</div>
 
       <div class="features">
         <div class="feature">
-          <div class="icon blue">Ч</div>
+          <div class="icon blue">⌕</div>
           <div>
-            <div class="feature-title">Общение группами</div>
-            <div class="feature-text">По теме или по подразделению</div>
+            <div class="feature-title">Поиск по сотрудникам</div>
+            <div class="feature-text">Имя, должность или подразделение</div>
           </div>
         </div>
         <div class="feature">
-          <div class="icon cyan">!</div>
+          <div class="icon cyan">◎</div>
           <div>
-            <div class="feature-title">Объявления</div>
-            <div class="feature-text">Всем или выбранным сотрудникам</div>
+            <div class="feature-title">Готовые служебные группы</div>
+            <div class="feature-text">Обращение сразу к нужной команде</div>
           </div>
         </div>
         <div class="feature">
-          <div class="icon violet">+</div>
+          <div class="icon amber">→</div>
           <div>
-            <div class="feature-title">Файлы рядом</div>
-            <div class="feature-text">Документы и фотографии в переписке</div>
-          </div>
-        </div>
-        <div class="feature">
-          <div class="icon amber">⌕</div>
-          <div>
-            <div class="feature-title">Важное под рукой</div>
-            <div class="feature-text">Поиск, закрепления и упоминания</div>
-          </div>
-        </div>
-        <div class="feature wide">
-          <div class="icon green">●</div>
-          <div>
-            <div class="feature-title">Понятно, кто на связи</div>
-            <div class="feature-text">Рабочий статус, режим «Не беспокоить» и автоответ</div>
+            <div class="feature-title">Адресные объявления</div>
+            <div class="feature-text">Без ручного составления списка</div>
           </div>
         </div>
       </div>
     </section>
 
-    <div class="future"><strong>В дальнейшем:</strong> подтверждение ознакомления с особо важными сообщениями</div>
+    <section class="app-visual" aria-label="Поиск и выбор сотрудников в приложении">
+      <div class="av-topbar">
+        <div class="av-brand-mark">У</div><div class="av-brand">Мессенджер УСЗН</div>
+        <div class="av-global-search">⌕&nbsp;&nbsp; Поиск сообщений и сотрудников</div>
+        <div class="av-connected">●&nbsp; Подключено</div>
+      </div>
+      <div class="av-body">
+        <nav class="av-rail">
+          <div class="av-rail-icon">●</div><div class="av-rail-icon active">◎</div><div class="av-rail-icon">@</div><div class="av-rail-icon">▦</div><div class="av-rail-icon bottom">⚙</div>
+        </nav>
+        <aside class="av-sidebar">
+          <div class="av-side-search">⌕&nbsp;&nbsp; Сотрудник или подразделение</div>
+          <div class="av-section-title">Структура организации</div>
+          <div class="av-tree-row"><span class="av-tree-icon">▾</span><span>УСЗН</span><span>86</span></div>
+          <div class="av-tree-row av-tree-indent active"><span class="av-tree-icon">▣</span><span>Отдел кадров</span><span>12</span></div>
+          <div class="av-tree-row av-tree-indent"><span class="av-tree-icon">▣</span><span>Приёмная</span><span>9</span></div>
+          <div class="av-tree-row av-tree-indent"><span class="av-tree-icon">▣</span><span>Юридический отдел</span><span>7</span></div>
+          <div class="av-tree-row av-tree-indent"><span class="av-tree-icon">▣</span><span>Социальные выплаты</span><span>18</span></div>
+          <div class="av-section-title">Служебные группы</div>
+          <div class="av-tree-row"><span class="av-tree-icon">◎</span><span>Руководители отделов</span><span>8</span></div>
+          <div class="av-tree-row"><span class="av-tree-icon">◎</span><span>Ответственные за отчёты</span><span>14</span></div>
+        </aside>
+        <main class="av-main">
+          <div class="av-main-head">
+            <div><div class="av-main-title">Отдел кадров</div><div class="av-main-meta">Выберите сотрудников или всю группу</div></div>
+            <div class="av-actions"><div class="av-action">✓</div><div class="av-action">⋯</div></div>
+          </div>
+          <div class="av-panel-pad">
+            <div class="av-card">
+              <div class="av-person-row selected"><div class="av-avatar">ЕК</div><div><div class="av-person-name">Елена Кузнецова</div><div class="av-person-role">Начальник отдела</div></div><div class="av-check">✓</div></div>
+              <div class="av-person-row selected"><div class="av-avatar teal">МС</div><div><div class="av-person-name">Михаил Сергеев</div><div class="av-person-role">Ведущий специалист</div></div><div class="av-check">✓</div></div>
+              <div class="av-person-row selected"><div class="av-avatar violet">ИП</div><div><div class="av-person-name">Ирина Петрова</div><div class="av-person-role">Специалист</div></div><div class="av-check">✓</div></div>
+              <div class="av-person-row"><div class="av-avatar amber">АК</div><div><div class="av-person-name">Анна Котова</div><div class="av-person-role">Специалист</div></div><div class="av-check">✓</div></div>
+              <div class="av-person-row"><div class="av-avatar teal">ОВ</div><div><div class="av-person-name">Олег Власов</div><div class="av-person-role">Главный специалист</div></div><div class="av-check">✓</div></div>
+            </div>
+          </div>
+          <div class="av-selection-box">
+            <div style="display:flex;align-items:center">
+              <div class="av-selected-list"><div class="av-selected-chip">Елена К.</div><div class="av-selected-chip">Михаил С.</div><div class="av-selected-chip">Ирина П.</div></div>
+              <div class="av-primary-button">Написать выбранным&nbsp; →</div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </section>
 
     <div class="caption">
-      <span><strong>Обсуждение, материалы и решения остаются вместе</strong> — не нужно восстанавливать контекст по разным окнам.</span>
+      <span><strong>Сообщение сразу получает нужная аудитория</strong> — без поиска контактов и повторной отправки каждому отдельно.</span>
     </div>
 
     <div class="slide-no">03</div>

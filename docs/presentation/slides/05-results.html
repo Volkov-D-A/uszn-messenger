@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=1920, initial-scale=1">
-  <title>Рабочая информация — на своём месте</title>
+  <title>Уведомления под контролем пользователя</title>
   <style>
     :root {
       --white: #f7f9ff;
@@ -11,6 +11,7 @@
       --cyan: #54d2c4;
       --green: #45bf87;
       --amber: #f5bc5b;
+      --violet: #8b78de;
       --panel: rgba(18, 30, 53, 0.84);
     }
 
@@ -21,7 +22,7 @@
       height: 1080px;
       margin: 0;
       overflow: hidden;
-      background: #0c1c34;
+      background: #07172f;
       font-family: Arial, "Ubuntu Sans", sans-serif;
     }
 
@@ -31,9 +32,9 @@
       height: 1080px;
       overflow: hidden;
       color: var(--white);
-      background-image: url("../assets/slide-05-results.png");
-      background-size: cover;
-      background-position: center;
+      background:
+        radial-gradient(circle at 84% 18%, rgba(91, 124, 255, 0.2), transparent 27%),
+        linear-gradient(135deg, #06152a 0%, #0a1d38 61%, #10284a 100%);
     }
 
     .slide::before {
@@ -41,8 +42,8 @@
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(90deg, rgba(5, 17, 36, 0.98) 0%, rgba(5, 17, 36, 0.95) 35%, rgba(5, 17, 36, 0.70) 46%, rgba(5, 17, 36, 0.04) 64%, transparent 80%),
-        linear-gradient(0deg, rgba(5, 15, 32, 0.3) 0%, transparent 32%);
+        linear-gradient(90deg, rgba(5, 17, 36, 0.74) 0%, rgba(5, 17, 36, 0.59) 38%, rgba(5, 17, 36, 0.11) 55%, transparent 70%),
+        linear-gradient(0deg, rgba(5, 15, 32, 0.28) 0%, transparent 34%);
     }
 
     .accent {
@@ -55,110 +56,94 @@
     .content {
       position: absolute;
       left: 88px;
-      top: 76px;
-      width: 735px;
-    }
-
-    .label {
-      display: inline-flex;
-      align-items: center;
-      height: 42px;
-      padding: 0 22px;
-      border: 1px solid rgba(84, 210, 196, 0.5);
-      border-radius: 21px;
-      color: #9ce9df;
-      background: rgba(18, 58, 67, 0.58);
-      font-size: 17px;
-      font-weight: 700;
-      letter-spacing: 1.7px;
-      text-transform: uppercase;
+      top: 82px;
+      width: 700px;
     }
 
     h1 {
-      width: 720px;
-      margin: 42px 0 0;
+      width: 690px;
+      margin: 48px 0 0;
       font-size: 62px;
-      line-height: 1.02;
+      line-height: 1.01;
       letter-spacing: -2px;
       font-weight: 800;
-      text-shadow: 0 3px 16px rgba(4, 14, 29, 0.32);
+      text-wrap: balance;
+      text-shadow: 0 3px 16px rgba(4, 14, 29, 0.3);
     }
 
     .subtitle {
-      width: 685px;
-      margin-top: 22px;
+      width: 665px;
+      margin-top: 30px;
       color: #dce5f6;
       font-size: 27px;
-      line-height: 1.24;
+      line-height: 1.23;
       font-weight: 600;
     }
 
-    .results {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      width: 720px;
-      margin-top: 31px;
+    .modes {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 610px;
+      margin-top: 34px;
     }
 
-    .result {
-      min-height: 126px;
-      padding: 17px 18px 15px;
+    .mode {
+      min-height: 74px;
+      display: grid;
+      grid-template-columns: 50px 1fr;
+      align-items: center;
+      width: max-content;
+      min-width: 410px;
+      max-width: 610px;
+      padding: 10px 20px 10px 11px;
       border: 1px solid rgba(202, 214, 234, 0.18);
-      border-radius: 18px;
-      background: rgba(15, 31, 56, 0.77);
+      border-radius: 22px;
+      background: rgba(15, 31, 56, 0.78);
       box-shadow: 0 12px 30px rgba(3, 12, 27, 0.17);
       backdrop-filter: blur(10px);
     }
 
-    .result-head {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
     .icon {
-      width: 39px;
-      height: 39px;
+      width: 40px;
+      height: 40px;
       display: grid;
       place-items: center;
-      flex: 0 0 auto;
       border-radius: 12px;
       color: white;
-      font-size: 19px;
+      font-size: 20px;
       line-height: 1;
       font-weight: 900;
     }
 
     .blue { background: var(--blue); }
     .cyan { background: var(--cyan); }
-    .amber { background: var(--amber); color: #18233a; }
-    .green { background: var(--green); }
+    .violet { background: var(--violet); }
 
-    .result-title {
-      color: var(--white);
-      font-size: 21px;
+    .mode-title {
+      color: #f7f9ff;
+      font-size: 20px;
       line-height: 1.12;
       font-weight: 750;
     }
 
-    .result-text {
-      margin-top: 11px;
+    .mode-text {
+      margin-top: 4px;
       color: #bdc9dc;
-      font-size: 16px;
-      line-height: 1.23;
+      font-size: 14px;
+      line-height: 1.18;
       font-weight: 500;
     }
 
     .caption {
       position: absolute;
       left: 88px;
-      right: 82px;
-      bottom: 43px;
+      width: 1220px;
+      bottom: 74px;
       min-height: 88px;
       display: flex;
       align-items: center;
-      padding: 18px 96px 18px 30px;
+      padding: 18px 30px;
       border-left: 5px solid var(--cyan);
       border-radius: 0 18px 18px 0;
       background: var(--panel);
@@ -175,60 +160,89 @@
     .slide-no {
       position: absolute;
       right: 62px;
-      bottom: 73px;
+      bottom: 45px;
       color: rgba(255, 255, 255, 0.72);
       font-size: 18px;
       font-weight: 700;
       letter-spacing: 2px;
     }
   </style>
+  <link rel="stylesheet" href="app-visuals.css">
 </head>
 <body>
   <main class="slide" aria-label="Пятый слайд презентации">
     <div class="accent"></div>
 
     <section class="content">
-      <div class="label">Результат для организации</div>
-      <h1>Рабочая информация — на своём месте</h1>
-      <div class="subtitle">Меньше поиска. Больше понятной совместной работы.</div>
+      <h1>Уведомления под контролем пользователя</h1>
+      <div class="subtitle">Для каждого чата можно выбрать подходящий уровень внимания</div>
 
-      <div class="results">
-        <div class="result">
-          <div class="result-head">
-            <div class="icon blue">✓</div>
-            <div class="result-title">Меньше потерь</div>
+      <div class="modes">
+        <div class="mode">
+          <div class="icon blue">●</div>
+          <div>
+            <div class="mode-title">Все сообщения</div>
+            <div class="mode-text">Когда важно следить за каждой репликой</div>
           </div>
-          <div class="result-text">Сообщения и важные материалы сохраняются в общей истории.</div>
         </div>
-
-        <div class="result">
-          <div class="result-head">
-            <div class="icon cyan">→</div>
-            <div class="result-title">Быстрее взаимодействие</div>
+        <div class="mode">
+          <div class="icon cyan">@</div>
+          <div>
+            <div class="mode-title">Только упоминания</div>
+            <div class="mode-text">Уведомление приходит при обращении лично к вам</div>
           </div>
-          <div class="result-text">Нужные коллеги сразу подключаются к общему обсуждению.</div>
         </div>
-
-        <div class="result">
-          <div class="result-head">
-            <div class="icon amber">⌕</div>
-            <div class="result-title">Единая история</div>
+        <div class="mode">
+          <div class="icon violet">☾</div>
+          <div>
+            <div class="mode-title">Тихий режим</div>
+            <div class="mode-text">Обычные сообщения не отвлекают от работы</div>
           </div>
-          <div class="result-text">Переписка, файлы и решения находятся в одном месте.</div>
-        </div>
-
-        <div class="result">
-          <div class="result-head">
-            <div class="icon green">◆</div>
-            <div class="result-title">Данные внутри организации</div>
-          </div>
-          <div class="result-text">Доступ предоставляется сотрудникам по их рабочим ролям.</div>
         </div>
       </div>
     </section>
 
+    <section class="app-visual" aria-label="Настройки уведомлений для чата">
+      <div class="av-topbar">
+        <div class="av-brand-mark">У</div><div class="av-brand">Мессенджер УСЗН</div>
+        <div class="av-global-search">⌕&nbsp;&nbsp; Поиск сообщений и сотрудников</div>
+        <div class="av-connected">●&nbsp; Подключено</div>
+      </div>
+      <div class="av-body">
+        <nav class="av-rail">
+          <div class="av-rail-icon active">●</div><div class="av-rail-icon">◎</div><div class="av-rail-icon">@</div><div class="av-rail-icon">▦</div><div class="av-rail-icon bottom">⚙</div>
+        </nav>
+        <aside class="av-sidebar">
+          <div class="av-side-search">⌕&nbsp;&nbsp; Найти чат</div>
+          <div class="av-section-title">Чаты подразделений</div>
+          <div class="av-chat active"><div class="av-avatar">ОК</div><div><div class="av-chat-name">Отдел кадров</div><div class="av-chat-preview">Уведомления настроены</div></div><div class="av-unread">4</div></div>
+          <div class="av-chat"><div class="av-avatar teal">П</div><div><div class="av-chat-name">Приёмная</div><div class="av-chat-preview">Все сообщения</div></div><div class="av-unread">1</div></div>
+          <div class="av-chat"><div class="av-avatar violet">ЮО</div><div><div class="av-chat-name">Юридический отдел</div><div class="av-chat-preview">Только упоминания</div></div></div>
+          <div class="av-chat"><div class="av-avatar amber">СВ</div><div><div class="av-chat-name">Социальные выплаты</div><div class="av-chat-preview">Тихий режим</div></div></div>
+        </aside>
+        <main class="av-main">
+          <div class="av-main-head"><div><div class="av-main-title">Отдел кадров</div><div class="av-main-meta">Настройки текущего чата</div></div><div class="av-actions"><div class="av-action">⌕</div><div class="av-action">⋯</div></div></div>
+          <div class="av-messages" style="opacity:.62">
+            <div class="av-message-row"><div class="av-message-avatar">ЕК</div><div class="av-bubble"><div class="av-author">Елена Кузнецова</div>Коллеги, направляю информацию по графику.</div></div>
+            <div class="av-message-row out"><div class="av-bubble">Принято, спасибо.</div></div>
+          </div>
+          <div class="av-settings-backdrop">
+            <section class="av-settings-dialog">
+              <div class="av-dialog-head"><div><div class="av-dialog-title">Уведомления: Отдел кадров</div><div class="av-main-meta">Выберите режим для этого чата</div></div><div class="av-dialog-close">×</div></div>
+              <div class="av-dialog-body">
+                <div class="av-radio-row"><div class="av-radio"></div><div class="av-mode-icon">●</div><div><div class="av-mode-name">Все сообщения</div><div class="av-mode-desc">Показывать уведомление о каждом новом сообщении</div></div></div>
+                <div class="av-radio-row selected"><div class="av-radio"></div><div class="av-mode-icon">@</div><div><div class="av-mode-name">Только упоминания</div><div class="av-mode-desc">Уведомлять, когда сообщение адресовано лично вам</div></div></div>
+                <div class="av-radio-row"><div class="av-radio"></div><div class="av-mode-icon">☾</div><div><div class="av-mode-name">Тихий режим</div><div class="av-mode-desc">Не показывать обычные уведомления этого чата</div></div></div>
+                <div class="av-critical-note"><div class="av-critical-icon">◆</div><div><strong>Критичные сообщения останутся заметными.</strong><br>Они отображаются независимо от выбранного режима.</div></div>
+              </div>
+            </section>
+          </div>
+        </main>
+      </div>
+    </section>
+
     <div class="caption">
-      <span><strong>Одна система вместо множества разрозненных окон:</strong> сотрудникам проще общаться, а руководителям — информировать.</span>
+      <span><strong>Меньше лишних сигналов — больше внимания к работе.</strong> Критичная информация всё равно останется заметной.</span>
     </div>
 
     <div class="slide-no">05</div>

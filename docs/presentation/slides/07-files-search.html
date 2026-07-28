@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1920, initial-scale=1">
+  <title>Удобный обмен файлами и поиск сообщений</title>
+  <style>
+    :root {
+      --white: #f7f9ff;
+      --blue: #5b7cff;
+      --cyan: #54d2c4;
+      --amber: #f5bc5b;
+      --green: #45bf87;
+      --panel: rgba(18, 30, 53, 0.84);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 1920px;
+      height: 1080px;
+      margin: 0;
+      overflow: hidden;
+      background: #07172f;
+      font-family: Arial, "Ubuntu Sans", sans-serif;
+    }
+
+    .slide {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 84% 18%, rgba(91, 124, 255, 0.2), transparent 27%),
+        linear-gradient(135deg, #06152a 0%, #0a1d38 61%, #10284a 100%);
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(5, 17, 36, 0.77) 0%, rgba(5, 17, 36, 0.62) 39%, rgba(5, 17, 36, 0.15) 56%, transparent 70%),
+        linear-gradient(0deg, rgba(5, 15, 32, 0.28) 0%, transparent 34%);
+    }
+
+    .accent {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 14px;
+      background: linear-gradient(180deg, var(--blue), var(--cyan));
+    }
+
+    .content {
+      position: absolute;
+      left: 88px;
+      top: 82px;
+      width: 700px;
+    }
+
+    h1 {
+      width: 690px;
+      margin: 48px 0 0;
+      font-size: 60px;
+      line-height: 1.01;
+      letter-spacing: -2px;
+      font-weight: 800;
+      text-wrap: balance;
+      text-shadow: 0 3px 16px rgba(4, 14, 29, 0.3);
+    }
+
+    .subtitle {
+      width: 650px;
+      margin-top: 29px;
+      color: #dce5f6;
+      font-size: 26px;
+      line-height: 1.23;
+      font-weight: 600;
+    }
+
+    .features {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 610px;
+      margin-top: 32px;
+    }
+
+    .feature {
+      min-height: 72px;
+      display: grid;
+      grid-template-columns: 50px 1fr;
+      align-items: center;
+      width: max-content;
+      min-width: 430px;
+      max-width: 610px;
+      padding: 10px 20px 10px 11px;
+      border: 1px solid rgba(202, 214, 234, 0.18);
+      border-radius: 22px;
+      background: rgba(15, 31, 56, 0.79);
+      box-shadow: 0 12px 30px rgba(3, 12, 27, 0.17);
+      backdrop-filter: blur(10px);
+    }
+
+    .icon {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      color: white;
+      font-size: 20px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .blue { background: var(--blue); }
+    .cyan { background: var(--cyan); }
+    .amber { background: var(--amber); color: #3f2a08; }
+
+    .feature-title {
+      color: #f7f9ff;
+      font-size: 20px;
+      line-height: 1.12;
+      font-weight: 750;
+    }
+
+    .feature-text {
+      margin-top: 4px;
+      color: #bdc9dc;
+      font-size: 14px;
+      line-height: 1.18;
+      font-weight: 500;
+    }
+
+    .caption {
+      position: absolute;
+      left: 88px;
+      width: 1250px;
+      bottom: 74px;
+      min-height: 88px;
+      display: flex;
+      align-items: center;
+      padding: 18px 30px;
+      border-left: 5px solid var(--cyan);
+      border-radius: 0 18px 18px 0;
+      background: var(--panel);
+      box-shadow: 0 18px 48px rgba(5, 14, 29, 0.2);
+      backdrop-filter: blur(12px);
+      color: #dbe5f4;
+      font-size: 25px;
+      line-height: 1.28;
+      font-weight: 500;
+    }
+
+    .caption strong { color: var(--white); }
+
+    .slide-no {
+      position: absolute;
+      right: 62px;
+      bottom: 45px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+  </style>
+  <link rel="stylesheet" href="app-visuals.css">
+</head>
+<body>
+  <main class="slide" aria-label="Седьмой слайд презентации">
+    <div class="accent"></div>
+
+    <section class="content">
+      <h1>Удобный обмен файлами и поиск сообщений</h1>
+      <div class="subtitle">Документы и изображения остаются внутри рабочего контекста</div>
+
+      <div class="features">
+        <div class="feature">
+          <div class="icon blue">▤</div>
+          <div>
+            <div class="feature-title">Файлы прямо в чате</div>
+            <div class="feature-text">Документы и изображения передаются вместе с сообщением</div>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="icon cyan">⌕</div>
+          <div>
+            <div class="feature-title">Поиск по переписке</div>
+            <div class="feature-text">Нужное сообщение находится без ручного просмотра</div>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="icon amber">◷</div>
+          <div>
+            <div class="feature-title">В пределах срока хранения</div>
+            <div class="feature-text">Доступные сообщения и вложения остаются в результатах</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="app-visual" aria-label="Файлы и поиск в интерфейсе приложения">
+      <div class="av-topbar">
+        <div class="av-brand-mark">У</div><div class="av-brand">Мессенджер УСЗН</div>
+        <div class="av-global-search">⌕&nbsp;&nbsp; Поиск сообщений и сотрудников</div>
+        <div class="av-connected">●&nbsp; Подключено</div>
+      </div>
+      <div class="av-body four">
+        <nav class="av-rail">
+          <div class="av-rail-icon active">●</div><div class="av-rail-icon">◎</div><div class="av-rail-icon">@</div><div class="av-rail-icon">▦</div><div class="av-rail-icon bottom">⚙</div>
+        </nav>
+        <aside class="av-sidebar">
+          <div class="av-side-search">⌕&nbsp;&nbsp; Найти чат</div>
+          <div class="av-section-title">Чаты</div>
+          <div class="av-chat active"><div class="av-avatar">ОК</div><div><div class="av-chat-name">Отдел кадров</div><div class="av-chat-preview">Шаблон отчёта.docx</div></div><div class="av-unread">4</div></div>
+          <div class="av-chat"><div class="av-avatar teal">П</div><div><div class="av-chat-name">Приёмная</div><div class="av-chat-preview">Фото расписания</div></div></div>
+          <div class="av-chat"><div class="av-avatar violet">ЮО</div><div><div class="av-chat-name">Юридический отдел</div><div class="av-chat-preview">Документ согласован</div></div></div>
+          <div class="av-section-title">Доступные вложения</div>
+          <div class="av-menu-item"><span class="av-menu-icon">▤</span><span>Документы</span><span>24</span></div>
+          <div class="av-menu-item"><span class="av-menu-icon">▧</span><span>Изображения</span><span>11</span></div>
+        </aside>
+        <main class="av-main">
+          <div class="av-main-head"><div><div class="av-main-title">Отдел кадров</div><div class="av-main-meta">18 участников · файлы доступны в переписке</div></div><div class="av-actions"><div class="av-action">⌕</div><div class="av-action">⋯</div></div></div>
+          <div class="av-messages" style="padding-left:14px;padding-right:14px">
+            <div class="av-message-row"><div class="av-message-avatar">ЕК</div><div class="av-bubble"><div class="av-author">Елена Кузнецова <span class="av-time">10:18</span></div>Направляю обновлённый шаблон отчёта.<div class="av-file"><div class="av-file-icon">▤</div><div><div class="av-file-name">Шаблон отчёта.docx</div><div class="av-file-meta">Документ · 284 КБ</div></div></div></div></div>
+            <div class="av-message-row out"><div class="av-bubble">Принято, использую новую версию.<span class="av-time">10:22 ✓✓</span></div></div>
+            <div class="av-message-row"><div class="av-message-avatar" style="background:#43aa9c">МС</div><div class="av-bubble"><div class="av-author">Михаил Сергеев <span class="av-time">10:31</span></div>Добавляю изображение с примером заполнения.<div class="av-file"><div class="av-file-icon image">▧</div><div><div class="av-file-name">Пример заполнения.png</div><div class="av-file-meta">Изображение · 620 КБ</div></div></div></div></div>
+          </div>
+          <div class="av-composer">Написать сообщение или прикрепить файл…<div style="margin-left:auto;margin-right:9px;color:#5b7cff;font-size:16px">⌕</div><div class="av-send">→</div></div>
+        </main>
+        <aside class="av-search-pane">
+          <div class="av-search-input">⌕&nbsp;&nbsp; шаблон отчёта</div>
+          <div class="av-search-count">Найдено: 3 · ◷ в пределах срока хранения</div>
+          <article class="av-result-card selected"><div class="av-result-author">Елена Кузнецова · сегодня</div><div class="av-result-text">Направляю обновлённый шаблон отчёта.</div><div class="av-file"><div class="av-file-icon">▤</div><div><div class="av-file-name">Шаблон отчёта.docx</div><div class="av-file-meta">Перейти к сообщению →</div></div></div></article>
+          <article class="av-result-card"><div class="av-result-author">Отдел кадров · 18 июля</div><div class="av-result-text">Предыдущая версия шаблона и комментарии.</div></article>
+          <article class="av-result-card"><div class="av-result-author">Анна Котова · 4 июля</div><div class="av-result-text">Вопрос по заполнению раздела отчёта.</div></article>
+        </aside>
+      </div>
+    </section>
+
+    <div class="caption">
+      <span><strong>Файл не теряется отдельно от обсуждения.</strong> Поиск возвращает и материал, и связанный с ним контекст.</span>
+    </div>
+
+    <div class="slide-no">07</div>
+  </main>
+</body>
+</html>

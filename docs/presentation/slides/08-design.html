@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1920, initial-scale=1">
+  <title>Дизайн-макет нового приложения</title>
+  <style>
+    :root {
+      --white: #f7f9ff;
+      --ink: #172033;
+      --muted: #718096;
+      --blue: #5b7cff;
+      --cyan: #54d2c4;
+      --green: #45bf87;
+      --amber: #f5bc5b;
+      --violet: #8b78de;
+      --coral: #ff776f;
+      --nav: #111b2d;
+      --sidebar: #1b2940;
+      --line: #dce4ef;
+      --panel: rgba(18, 30, 53, 0.88);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 1920px;
+      height: 1080px;
+      margin: 0;
+      overflow: hidden;
+      background: #07172f;
+      font-family: Arial, "Ubuntu Sans", sans-serif;
+    }
+
+    .slide {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 85% 18%, rgba(91, 124, 255, 0.19), transparent 28%),
+        radial-gradient(circle at 14% 84%, rgba(84, 210, 196, 0.11), transparent 26%),
+        linear-gradient(135deg, #06152a 0%, #0a1d38 58%, #10284a 100%);
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.22;
+      background-image: radial-gradient(circle, rgba(112, 162, 255, 0.58) 1.4px, transparent 1.7px);
+      background-size: 46px 46px;
+      mask-image: linear-gradient(90deg, transparent 0%, black 62%, black 100%);
+    }
+
+    .accent {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 14px;
+      background: linear-gradient(180deg, var(--blue), var(--cyan));
+    }
+
+    .heading {
+      position: absolute;
+      left: 88px;
+      top: 58px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 56px;
+      line-height: 1;
+      letter-spacing: -1.8px;
+      font-weight: 800;
+      text-shadow: 0 3px 16px rgba(4, 14, 29, 0.3);
+    }
+
+    .subtitle {
+      margin-top: 18px;
+      color: #cdd9eb;
+      font-size: 24px;
+      line-height: 1.2;
+      font-weight: 600;
+    }
+
+    .app {
+      position: absolute;
+      left: 88px;
+      top: 195px;
+      width: 1744px;
+      height: 748px;
+      overflow: hidden;
+      border: 1px solid rgba(218, 226, 239, 0.72);
+      border-radius: 24px;
+      background: #f5f8fc;
+      box-shadow: 0 38px 100px rgba(2, 10, 24, 0.38), 0 8px 28px rgba(2, 10, 24, 0.28);
+    }
+
+    .topbar {
+      height: 58px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      background: #101a2b;
+      color: #edf3fb;
+    }
+
+    .brand-mark {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      margin-right: 12px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--blue), #7395ff);
+      color: white;
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .brand {
+      font-size: 16px;
+      font-weight: 750;
+    }
+
+    .top-search {
+      width: 360px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      margin-left: 46px;
+      padding: 0 13px;
+      border: 1px solid #35445d;
+      border-radius: 10px;
+      background: #1c2940;
+      color: #8796ad;
+      font-size: 12px;
+    }
+
+    .connection {
+      margin-left: auto;
+      padding: 7px 13px;
+      border-radius: 16px;
+      background: rgba(69, 191, 135, 0.15);
+      color: #91e2b6;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .app-body {
+      display: grid;
+      grid-template-columns: 72px 284px 1fr 244px;
+      height: 690px;
+    }
+
+    .rail {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 18px;
+      background: var(--nav);
+    }
+
+    .rail-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 12px;
+      border-radius: 12px;
+      color: #8594ab;
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    .rail-icon.active {
+      background: rgba(91, 124, 255, 0.2);
+      color: #8ba6ff;
+      box-shadow: inset 3px 0 var(--blue);
+    }
+
+    .rail-icon.settings { margin-top: auto; margin-bottom: 18px; }
+
+    .chats {
+      padding: 16px 13px;
+      background: var(--sidebar);
+      color: #d7dfeb;
+    }
+
+    .sidebar-search {
+      height: 36px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      border-radius: 9px;
+      background: #2a3850;
+      color: #93a0b4;
+      font-size: 12px;
+    }
+
+    .attention,
+    .announcements {
+      height: 46px;
+      display: grid;
+      grid-template-columns: 28px 1fr auto;
+      align-items: center;
+      margin-top: 10px;
+      padding: 0 11px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .attention {
+      border: 1px solid rgba(84, 210, 196, 0.32);
+      background: rgba(84, 210, 196, 0.1);
+      color: #dcfbf7;
+    }
+
+    .announcements { background: #263650; }
+
+    .menu-icon { color: var(--cyan); font-size: 17px; }
+    .announcements .menu-icon { color: var(--amber); }
+
+    .badge {
+      min-width: 20px;
+      height: 20px;
+      display: grid;
+      place-items: center;
+      padding: 0 6px;
+      border-radius: 10px;
+      background: var(--coral);
+      color: white;
+      font-size: 10px;
+    }
+
+    .section-title {
+      margin: 18px 8px 8px;
+      color: #8492a8;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+    }
+
+    .chat {
+      display: grid;
+      grid-template-columns: 36px 1fr auto;
+      gap: 8px;
+      align-items: center;
+      min-height: 54px;
+      margin: 3px 0;
+      padding: 7px 8px;
+      border-radius: 10px;
+    }
+
+    .chat.active { background: #30415d; }
+
+    .avatar {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #6c83d6;
+      color: white;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .avatar.teal { background: #43a99b; }
+    .avatar.violet { background: #8871c8; }
+    .avatar.amber { background: #c89342; }
+
+    .chat-name { color: #edf2f9; font-size: 12px; font-weight: 750; }
+    .chat-preview { margin-top: 3px; color: #98a5b8; font-size: 10px; }
+
+    .unread {
+      min-width: 18px;
+      height: 18px;
+      display: grid;
+      place-items: center;
+      padding: 0 5px;
+      border-radius: 9px;
+      background: var(--blue);
+      color: white;
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .conversation {
+      position: relative;
+      background: #f7f9fc;
+      color: var(--ink);
+    }
+
+    .conversation-head {
+      height: 66px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      border-bottom: 1px solid var(--line);
+      background: white;
+    }
+
+    .conversation-title { font-size: 15px; font-weight: 800; }
+    .conversation-meta { margin-top: 4px; color: #8290a3; font-size: 11px; }
+
+    .head-actions {
+      display: flex;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    .head-action {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      color: #718096;
+      background: #f9fbfd;
+      font-size: 14px;
+    }
+
+    .pinned {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      margin: 14px 18px 0;
+      padding: 0 13px;
+      border: 1px solid rgba(245, 188, 91, 0.38);
+      border-radius: 10px;
+      background: #fff9ec;
+      color: #6d5428;
+      font-size: 11px;
+      font-weight: 650;
+    }
+
+    .pin { margin-right: 9px; color: #c78c29; font-size: 15px; }
+
+    .messages {
+      padding: 16px 24px 92px;
+    }
+
+    .message-row {
+      display: flex;
+      align-items: flex-end;
+      margin-bottom: 13px;
+    }
+
+    .message-row.out { justify-content: flex-end; }
+
+    .message-avatar {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      margin-right: 8px;
+      border-radius: 50%;
+      background: #6c83d6;
+      color: white;
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .bubble {
+      max-width: 470px;
+      padding: 10px 13px;
+      border: 1px solid #e0e6ef;
+      border-radius: 13px 13px 13px 4px;
+      background: white;
+      box-shadow: 0 4px 12px rgba(25, 43, 72, 0.05);
+      font-size: 11px;
+      line-height: 1.3;
+    }
+
+    .out .bubble {
+      border: none;
+      border-radius: 13px 13px 4px 13px;
+      background: #e9efff;
+    }
+
+    .author { margin-bottom: 4px; color: #4f66b5; font-size: 10px; font-weight: 800; }
+    .time { margin-left: 8px; color: #95a1b2; font-size: 9px; }
+
+    .attachment {
+      width: 340px;
+      display: grid;
+      grid-template-columns: 42px 1fr auto;
+      align-items: center;
+      margin-top: 8px;
+      padding: 9px;
+      border: 1px solid #dfe6f0;
+      border-radius: 10px;
+      background: #f8fafc;
+    }
+
+    .file-icon {
+      width: 34px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: var(--blue);
+      color: white;
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .file-name { font-size: 10px; font-weight: 750; }
+    .file-meta { margin-top: 3px; color: #8a97aa; font-size: 9px; }
+    .download { color: var(--blue); font-size: 16px; }
+
+    .composer {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 16px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      padding: 0 10px 0 15px;
+      border: 1px solid #d9e1ec;
+      border-radius: 14px;
+      background: white;
+      box-shadow: 0 7px 20px rgba(22, 42, 72, 0.08);
+      color: #97a3b4;
+      font-size: 11px;
+    }
+
+    .composer-actions { margin-left: auto; display: flex; gap: 8px; }
+
+    .send {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--blue);
+      color: white;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .details {
+      padding: 16px 14px;
+      border-left: 1px solid var(--line);
+      background: #f1f4f8;
+      color: var(--ink);
+    }
+
+    .detail-title {
+      margin-bottom: 10px;
+      color: #59677b;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .member {
+      display: grid;
+      grid-template-columns: 34px 1fr auto;
+      gap: 8px;
+      align-items: center;
+      min-height: 48px;
+      padding: 6px;
+      border-radius: 9px;
+    }
+
+    .member:hover { background: #e8edf4; }
+    .member-name { font-size: 11px; font-weight: 750; }
+    .member-role { margin-top: 3px; color: #8491a3; font-size: 9px; }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 3px rgba(69, 191, 135, 0.14);
+    }
+
+    .status-dot.away { background: var(--amber); box-shadow: 0 0 0 3px rgba(245, 188, 91, 0.14); }
+    .status-dot.off { background: #a8b1bf; box-shadow: none; }
+
+    .detail-divider {
+      height: 1px;
+      margin: 14px 0;
+      background: #dbe2eb;
+    }
+
+    .file-mini {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+      padding: 8px;
+      border: 1px solid #dfe5ed;
+      border-radius: 9px;
+      background: white;
+    }
+
+    .file-mini-icon {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 7px;
+      background: rgba(91, 124, 255, 0.12);
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .caption {
+      position: absolute;
+      left: 88px;
+      bottom: 42px;
+      width: 1240px;
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      padding: 15px 28px;
+      border-left: 5px solid var(--cyan);
+      border-radius: 0 18px 18px 0;
+      background: var(--panel);
+      box-shadow: 0 18px 48px rgba(5, 14, 29, 0.2);
+      color: #dbe5f4;
+      font-size: 23px;
+      line-height: 1.25;
+      font-weight: 500;
+    }
+
+    .caption strong { color: var(--white); }
+
+    .slide-no {
+      position: absolute;
+      right: 62px;
+      bottom: 45px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+  <main class="slide" aria-label="Восьмой слайд презентации">
+    <div class="accent"></div>
+
+    <header class="heading">
+      <h1>Дизайн-макет нового приложения</h1>
+      <div class="subtitle">Основные рабочие инструменты собраны на одном экране</div>
+    </header>
+
+    <section class="app" aria-label="Макет интерфейса мессенджера">
+      <div class="topbar">
+        <div class="brand-mark">У</div>
+        <div class="brand">Мессенджер УСЗН</div>
+        <div class="top-search">⌕&nbsp;&nbsp; Поиск сообщений и сотрудников</div>
+        <div class="connection">●&nbsp; Подключено</div>
+      </div>
+
+      <div class="app-body">
+        <nav class="rail" aria-label="Основная навигация">
+          <div class="rail-icon active">●</div>
+          <div class="rail-icon">◎</div>
+          <div class="rail-icon">@</div>
+          <div class="rail-icon">▦</div>
+          <div class="rail-icon settings">⚙</div>
+        </nav>
+
+        <aside class="chats" aria-label="Список чатов">
+          <div class="sidebar-search">⌕&nbsp;&nbsp; Найти чат или сотрудника</div>
+
+          <div class="attention">
+            <span class="menu-icon">◎</span>
+            <span>Внимание</span>
+            <span class="badge">3</span>
+          </div>
+          <div class="announcements">
+            <span class="menu-icon">◆</span>
+            <span>Объявления</span>
+            <span class="badge">2</span>
+          </div>
+
+          <div class="section-title">Чаты подразделений</div>
+          <div class="chat active">
+            <div class="avatar">ОК</div>
+            <div><div class="chat-name">Отдел кадров</div><div class="chat-preview">Новый документ во вложении</div></div>
+            <div class="unread">4</div>
+          </div>
+          <div class="chat">
+            <div class="avatar teal">П</div>
+            <div><div class="chat-name">Приёмная</div><div class="chat-preview">Совещание в 14:00</div></div>
+            <div class="unread">1</div>
+          </div>
+          <div class="chat">
+            <div class="avatar violet">ЮО</div>
+            <div><div class="chat-name">Юридический отдел</div><div class="chat-preview">Анна: согласовано</div></div>
+          </div>
+
+          <div class="section-title">Личные сообщения</div>
+          <div class="chat">
+            <div class="avatar amber">АК</div>
+            <div><div class="chat-name">Анна Котова</div><div class="chat-preview">Спасибо, получила</div></div>
+          </div>
+          <div class="chat">
+            <div class="avatar teal">МС</div>
+            <div><div class="chat-name">Михаил Сергеев</div><div class="chat-preview">Файл готов</div></div>
+            <div class="unread">2</div>
+          </div>
+        </aside>
+
+        <section class="conversation" aria-label="Текущая переписка">
+          <div class="conversation-head">
+            <div>
+              <div class="conversation-title">Отдел кадров</div>
+              <div class="conversation-meta">18 участников · 12 в сети</div>
+            </div>
+            <div class="head-actions">
+              <div class="head-action">⌕</div>
+              <div class="head-action">⋯</div>
+            </div>
+          </div>
+
+          <div class="pinned"><span class="pin">◆</span>Закреплено: график предоставления отчётности на текущий месяц</div>
+
+          <div class="messages">
+            <div class="message-row">
+              <div class="message-avatar">ЕК</div>
+              <div class="bubble">
+                <div class="author">Елена Кузнецова <span class="time">10:18</span></div>
+                Коллеги, направляю обновлённый шаблон отчёта. Используйте его начиная с этой недели.
+                <div class="attachment">
+                  <div class="file-icon">▤</div>
+                  <div><div class="file-name">Шаблон отчёта.docx</div><div class="file-meta">Документ · 284 КБ</div></div>
+                  <div class="download">↓</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="message-row out">
+              <div class="bubble">Принято, передам сотрудникам подразделения.<span class="time">10:22 ✓✓</span></div>
+            </div>
+
+            <div class="message-row">
+              <div class="message-avatar" style="background:#43a99b">МС</div>
+              <div class="bubble">
+                <div class="author">Михаил Сергеев <span class="time">10:24</span></div>
+                @Ирина, прошу подтвердить ознакомление до конца дня.
+              </div>
+            </div>
+          </div>
+
+          <div class="composer">
+            Написать сообщение…
+            <div class="composer-actions"><span>⌕</span><span>☺</span><div class="send">→</div></div>
+          </div>
+        </section>
+
+        <aside class="details" aria-label="Сотрудники и вложения">
+          <div class="detail-title">Сотрудники · 18</div>
+          <div class="member">
+            <div class="avatar">ЕК</div>
+            <div><div class="member-name">Елена Кузнецова</div><div class="member-role">Начальник отдела</div></div>
+            <div class="status-dot"></div>
+          </div>
+          <div class="member">
+            <div class="avatar teal">МС</div>
+            <div><div class="member-name">Михаил Сергеев</div><div class="member-role">Специалист</div></div>
+            <div class="status-dot"></div>
+          </div>
+          <div class="member">
+            <div class="avatar violet">ИП</div>
+            <div><div class="member-name">Ирина Петрова</div><div class="member-role">Специалист</div></div>
+            <div class="status-dot away"></div>
+          </div>
+          <div class="member">
+            <div class="avatar amber">АК</div>
+            <div><div class="member-name">Анна Котова</div><div class="member-role">Ведущий специалист</div></div>
+            <div class="status-dot off"></div>
+          </div>
+
+          <div class="detail-divider"></div>
+          <div class="detail-title">Вложения</div>
+          <div class="file-mini"><div class="file-mini-icon">▤</div><div><div class="file-name">Шаблон отчёта</div><div class="file-meta">сегодня</div></div></div>
+          <div class="file-mini"><div class="file-mini-icon">▧</div><div><div class="file-name">График дежурств</div><div class="file-meta">вчера</div></div></div>
+          <div class="file-mini"><div class="file-mini-icon">▤</div><div><div class="file-name">Памятка</div><div class="file-meta">24 июля</div></div></div>
+        </aside>
+      </div>
+    </section>
+
+    <div class="caption">
+      <span><strong>Вся рабочая картина видна сразу:</strong> чаты, важные события, текущая переписка, материалы и доступность коллег.</span>
+    </div>
+
+    <div class="slide-no">08</div>
+  </main>
+</body>
+</html>
